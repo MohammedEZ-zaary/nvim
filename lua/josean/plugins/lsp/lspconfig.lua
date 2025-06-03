@@ -85,23 +85,13 @@ return {
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
     end
 
+    local mason_lspconfig = require("mason-lspconfig")
+    mason_lspconfig.setup({})
     mason_lspconfig.setup_handlers({
       -- default handler for installed servers
       function(server_name)
         lspconfig[server_name].setup({
           capabilities = capabilities,
-        })
-      end,
-      ["volar"] = function()
-        -- Configure Vue (Volar) LSP
-        lspconfig["volar"].setup({
-          capabilities = capabilities,
-          filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-          init_options = {
-            vue = {
-              hybridMode = false, -- Set to true if using both Vue 2 & 3
-            },
-          },
         })
       end,
       ["svelte"] = function()
@@ -130,10 +120,7 @@ return {
         -- configure clangd language server
         lspconfig["clangd"].setup({
           capabilities = capabilities,
-          cmd = {
-            "C:/msys64/mingw64/bin/clangd.exe", -- Full path to clangd.exe
-            "--compile-commands-dir=C:/Users/dev/Documents/development/handsome", -- Path to your compile_commands.json
-          },
+          cmd = {},
         })
       end,
 
@@ -145,7 +132,7 @@ return {
         })
       end,
       ["lua_ls"] = function()
-        -- configure lua server (with special settings)
+        -- configure lua server (with special settings)Add commentMore actions
         lspconfig["lua_ls"].setup({
           capabilities = capabilities,
           settings = {
@@ -156,6 +143,18 @@ return {
               completion = {
                 callSnippet = "Replace",
               },
+            },
+          },
+        })
+      end,
+      ["volar"] = function()
+        -- Configure Vue (Volar) LSP
+        lspconfig["volar"].setup({
+          capabilities = capabilities,
+          filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+          init_options = {
+            vue = {
+              hybridMode = false, -- Set to true if using both Vue 2 & 3
             },
           },
         })
